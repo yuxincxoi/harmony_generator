@@ -73,29 +73,19 @@ const AudioProcessor = () => {
             }
           };
 
+          mediaRecorderRef.current.onstop = () => {
+            const audioBlob = new Blob(recordedChunksRef.current, {
+              type: "audio/m4a",
+            });
+            const audioUrl = URL.createObjectURL(audioBlob);
+            setAudioURL(audioUrl);
+          };
+
           mediaRecorderRef.current.start();
         } else {
-          // 녹음 중지 및 파일 저장
-          if (
-            mediaRecorderRef.current &&
-            mediaRecorderRef.current.state === "recording"
-          ) {
+          // 녹음 중지
+          if (mediaRecorderRef.current) {
             mediaRecorderRef.current.stop();
-            mediaRecorderRef.current.onstop = () => {
-              const audioBlob = new Blob(recordedChunksRef.current, {
-                type: "audio/webm",
-              });
-              const audioUrl = URL.createObjectURL(audioBlob);
-
-              // 다운로드 링크 생성
-              const downloadLink = document.createElement("a");
-              downloadLink.href = audioUrl;
-              downloadLink.download = "processed-audio.m4a";
-              downloadLink.click();
-
-              // 리소스 정리
-              URL.revokeObjectURL(audioUrl);
-            };
           }
 
           // 정리 작업: 처리 중지 시 리소스를 해제
