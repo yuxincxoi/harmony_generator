@@ -6,7 +6,6 @@ const AudioProcessor = () => {
   const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const jungleRef = useRef<any>(null); // Jungle 오디오 프로세서 참조
   const [isProcessing, setIsProcessing] = useState(false); // 음치마이크 실행 여부
-  const [pitchOffset, setPitchOffset] = useState(0.3);
   const [JungleModule, setJungleModule] = useState<any>(null); // Jungle 모듈을 동적으로 로드
 
   // 녹음을 위한 새로운 상태와 ref 추가
@@ -46,7 +45,7 @@ const AudioProcessor = () => {
     const processAudio = async () => {
       try {
         jungleRef.current = new JungleModule(audioContext);
-        jungleRef.current.setPitchOffset(pitchOffset);
+        jungleRef.current.setPitchOffset(0.3);
 
         if (isProcessing) {
           const stream = await navigator.mediaDevices.getUserMedia({
@@ -102,19 +101,10 @@ const AudioProcessor = () => {
     return () => {
       cleanupAudioResources(microphoneRef, jungleRef);
     };
-  }, [audioContext, isProcessing, pitchOffset, JungleModule]);
+  }, [audioContext, isProcessing, JungleModule]);
 
   const handleStartStop = () => {
     setIsProcessing(!isProcessing);
-  };
-
-  const handlePitchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPitchOffset = parseFloat(e.target.value); // 입력받은 피치 값을 숫자로 변환
-    setPitchOffset(newPitchOffset);
-
-    if (jungleRef.current) {
-      jungleRef.current.setPitchOffset(newPitchOffset); // Jungle 인스턴스의 피치 오프셋 업데이트
-    }
   };
 
   return (
@@ -126,22 +116,6 @@ const AudioProcessor = () => {
         >
           {isProcessing ? "중단" : "시작"}
         </div>
-        <br />
-        <div className="flex justify-between pt-16">
-          <p>down</p>
-          <p>up</p>
-        </div>
-        <input
-          id="pitch"
-          type="range"
-          min="-1"
-          max="1"
-          step="0.1"
-          value={pitchOffset}
-          onChange={handlePitchChange}
-          placeholder="PitchChanger"
-          className="z-10 mb-1 mt-4 h-2 w-full appearance-none bg-neutral-100 focus:outline-black dark:bg-neutral-900 dark:focus:outline-white [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-black active:[&::-moz-range-thumb]:scale-110 [&::-moz-range-thumb]:dark:bg-white [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:active:scale-110 [&::-webkit-slider-thumb]:dark:bg-white [&::-moz-range-thumb]:rounded-full [&::-webkit-slider-thumb]:rounded-full rounded-full"
-        />
         {audioURL && (
           <div className="mt-4">
             <audio controls src={audioURL}></audio>
