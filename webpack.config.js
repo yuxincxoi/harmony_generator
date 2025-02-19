@@ -19,13 +19,16 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.js|ts|tsx|jsx$/,
-        use: "babel-loader",
-        exclude: /node_modules/,
-      },
-      {
         test: /\.(ts|tsx)$/,
-        use: "ts-loader",
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-typescript", "@babel/preset-react"],
+            },
+          },
+          "ts-loader",
+        ],
         exclude: /node_modules/,
       },
     ],
