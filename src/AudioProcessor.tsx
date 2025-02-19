@@ -9,6 +9,12 @@ const AudioProcessor = () => {
   const [pitchOffset, setPitchOffset] = useState(0.3);
   const [JungleModule, setJungleModule] = useState<any>(null); // Jungle 모듈을 동적으로 로드
 
+  // 녹음을 위한 새로운 상태와 ref 추가
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
+  const processorDestinationRef =
+    useRef<MediaStreamAudioDestinationNode | null>(null);
+
   useEffect(() => {
     // 오디오 처리 초기화
     const initAudio = async () => {
@@ -46,9 +52,51 @@ const AudioProcessor = () => {
             audio: true,
           }); // 마이크 스트림 얻기
           microphoneRef.current = audioContext.createMediaStreamSource(stream); // 얻은 마이크 스트림 입력 소스를 AudioContext에 전달
+          processorDestinationRef.current =
+            audioContext.createMediaStreamDestination();
+
+          // 오디오 처리 체인 연결
           microphoneRef.current.connect(jungleRef.current.input); // Jungle 오디오 프로세서에 연결
+          jungleRef.current.output.connect(processorDestinationRef.current);
           jungleRef.current.output.connect(audioContext.destination); // 처리된 오디오를 스피커로 출력
+
+          // MediaRecorder 설정
+          mediaRecorderRef.current = new MediaRecorder(
+            processorDestinationRef.current.stream
+          );
+          recordedChunksRef.current = [];
+
+          mediaRecorderRef.current.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              recordedChunksRef.current.push(event.data);
+            }
+          };
+
+          mediaRecorderRef.current.start();
         } else {
+          // 녹음 중지 및 파일 저장
+          if (
+            mediaRecorderRef.current &&
+            mediaRecorderRef.current.state === "recording"
+          ) {
+            mediaRecorderRef.current.stop();
+            mediaRecorderRef.current.onstop = () => {
+              const audioBlob = new Blob(recordedChunksRef.current, {
+                type: "audio/webm",
+              });
+              const audioUrl = URL.createObjectURL(audioBlob);
+
+              // 다운로드 링크 생성
+              const downloadLink = document.createElement("a");
+              downloadLink.href = audioUrl;
+              downloadLink.download = "processed-audio.m4a";
+              downloadLink.click();
+
+              // 리소스 정리
+              URL.revokeObjectURL(audioUrl);
+            };
+          }
+
           // 정리 작업: 처리 중지 시 리소스를 해제
           cleanupAudioResources(microphoneRef, jungleRef);
         }
