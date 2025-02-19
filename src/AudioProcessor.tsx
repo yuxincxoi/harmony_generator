@@ -1,15 +1,13 @@
-"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { cleanupAudioResources } from "./utils/cleanup";
 
-import React, { useEffect, useRef, useState, Suspense } from "react";
-
-const AudioProcessor = React.lazy(() => import("./AudioProcessor"));
-
-const Processor = () => {
+const AudioProcessor = () => {
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const jungleRef = useRef<any>(null); // Jungle 오디오 프로세서 참조
   const [isProcessing, setIsProcessing] = useState(false); // 음치마이크 실행 여부
   const [pitchOffset, setPitchOffset] = useState(0.3);
+  const [JungleModule, setJungleModule] = useState<any>(null); // Jungle 모듈을 동적으로 로드
 
   useEffect(() => {
     // 오디오 처리 초기화
@@ -22,12 +20,25 @@ const Processor = () => {
   }, []);
 
   useEffect(() => {
-    if (!audioContext) return;
+    // Jungle 모듈을 비동기적으로 로드
+    const loadJungleModule = async () => {
+      try {
+        const { default: Jungle } = await import("../lib/jungle.mjs");
+        setJungleModule(() => Jungle); // 로드된 Jungle 모듈을 상태로 저장
+      } catch (error) {
+        console.error("Error loading Jungle module:", error);
+      }
+    };
+
+    loadJungleModule();
+  }, []);
+
+  useEffect(() => {
+    if (!audioContext || !JungleModule) return;
 
     const processAudio = async () => {
       try {
-        const { default: Jungle } = await import("../lib/jungle.mjs");
-        jungleRef.current = new Jungle(audioContext);
+        jungleRef.current = new JungleModule(audioContext);
         jungleRef.current.setPitchOffset(pitchOffset);
 
         if (isProcessing) {
@@ -38,10 +49,8 @@ const Processor = () => {
           microphoneRef.current.connect(jungleRef.current.input); // Jungle 오디오 프로세서에 연결
           jungleRef.current.output.connect(audioContext.destination); // 처리된 오디오를 스피커로 출력
         } else {
-          if (microphoneRef.current) {
-            microphoneRef.current.disconnect();
-            jungleRef.current.output.disconnect();
-          }
+          // 정리 작업: 처리 중지 시 리소스를 해제
+          cleanupAudioResources(microphoneRef, jungleRef);
         }
       } catch (error) {
         console.error(error);
@@ -52,14 +61,9 @@ const Processor = () => {
 
     // 컴포넌트 언마운트 시 리소스 정리
     return () => {
-      if (microphoneRef.current) {
-        microphoneRef.current.disconnect(); // 마이크 입력 해제
-      }
-      if (jungleRef.current) {
-        jungleRef.current.output.disconnect(); // Jungle 출력 해제
-      }
+      cleanupAudioResources(microphoneRef, jungleRef);
     };
-  }, [audioContext, isProcessing, pitchOffset]);
+  }, [audioContext, isProcessing, pitchOffset, JungleModule]);
 
   const handleStartStop = () => {
     setIsProcessing(!isProcessing);
@@ -74,37 +78,8 @@ const Processor = () => {
     }
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const switchInput = document.getElementById("switch") as HTMLInputElement;
-    const switchLabel = switchInput.nextElementSibling as HTMLLabelElement;
-    const onfButton = switchLabel.querySelector(".onf_btn") as HTMLElement;
-
-    switchInput.addEventListener("change", () => {
-      if (switchInput.checked) {
-        switchLabel.classList.add("bg-[#c44]", "border-[#c44]");
-        switchLabel.classList.remove("hover:bg-[#efefef]");
-        onfButton.classList.add(
-          "left-[34px]",
-          "bg-white",
-          "shadow-[1px_2px_3px_rgba(0,0,0,0.12)]"
-        );
-      } else {
-        switchLabel.classList.remove("bg-[#c44]", "border-[#c44]");
-        switchLabel.classList.add("hover:bg-[#efefef]");
-        onfButton.classList.remove(
-          "left-[34px]",
-          "bg-white",
-          "shadow-[1px_2px_3px_rgba(0,0,0,0.12)]"
-        );
-      }
-    });
-  });
-
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
-        <AudioProcessor />
-      </Suspense>
       <div>
         <label className="relative inline-flex items-center cursor-pointer mt-16 mx-auto w-60">
           <input
@@ -137,4 +112,4 @@ const Processor = () => {
   );
 };
 
-export default Processor;
+export default AudioProcessor;
