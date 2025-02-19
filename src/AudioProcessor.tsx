@@ -145,6 +145,11 @@ const AudioProcessor = () => {
         {audioURL && (
           <div className="mt-4">
             <audio controls src={audioURL}></audio>
+            <a href={audioURL} download="processed_audio.m4a">
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">
+                다운로드
+              </button>
+            </a>
           </div>
         )}
       </div>
