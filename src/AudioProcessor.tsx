@@ -142,6 +142,11 @@ const AudioProcessor = () => {
           placeholder="PitchChanger"
           className="z-10 mb-1 mt-4 h-2 w-full appearance-none bg-neutral-100 focus:outline-black dark:bg-neutral-900 dark:focus:outline-white [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:appearance-none [&::-moz-range-thumb]:border-none [&::-moz-range-thumb]:bg-black active:[&::-moz-range-thumb]:scale-110 [&::-moz-range-thumb]:dark:bg-white [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:bg-black [&::-webkit-slider-thumb]:active:scale-110 [&::-webkit-slider-thumb]:dark:bg-white [&::-moz-range-thumb]:rounded-full [&::-webkit-slider-thumb]:rounded-full rounded-full"
         />
+        {audioURL && (
+          <div className="mt-4">
+            <audio controls src={audioURL}></audio>
+          </div>
+        )}
       </div>
     </>
   );
