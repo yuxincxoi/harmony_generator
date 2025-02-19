@@ -14,6 +14,7 @@ const AudioProcessor = () => {
   const recordedChunksRef = useRef<Blob[]>([]);
   const processorDestinationRef =
     useRef<MediaStreamAudioDestinationNode | null>(null);
+  const [audioURL, setAudioURL] = useState<string | null>(null); // 저장된 오디오 URL
 
   useEffect(() => {
     // 오디오 처리 초기화
