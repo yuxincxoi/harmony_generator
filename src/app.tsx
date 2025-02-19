@@ -1,4 +1,5 @@
 import React from "react";
+import Processor from "./AudioProcessor";
 
 const App: React.FC = () => {
   return (
