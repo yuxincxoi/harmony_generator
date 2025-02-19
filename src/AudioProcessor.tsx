@@ -81,16 +81,12 @@ const AudioProcessor = () => {
   return (
     <>
       <div>
-        <label className="relative inline-flex items-center cursor-pointer mt-16 mx-auto w-60">
-          <input
-            type="checkbox"
-            checked={isProcessing} // 체크박스 상태와 isProcessing 동기화
-            onChange={handleStartStop} // 상태 변경 시 핸들러 호출
-            placeholder="onOff"
-            className="sr-only peer"
-          />
-          <div className="w-14 h-8 bg-gray-200 hover:bg-gray-300 peer-focus:outline-0 peer-focus:ring-transparent rounded-full peer transition-all ease-in-out duration-500 peer-checked:after:translate-x-full peer-checked:after:border-white after:absolute after:top-[3.5px] after:left-[95.5px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-black hover:peer-checked:bg-stone-700 mx-auto"></div>
-        </label>
+        <div
+          className="cursor-pointer mt-16 mx-auto w-60 text-center p-2 bg-gray-200 hover:bg-gray-300 rounded-lg"
+          onClick={handleStartStop}
+        >
+          {isProcessing ? "중단" : "시작"}
+        </div>
         <br />
         <div className="flex justify-between pt-16">
           <p>down</p>
