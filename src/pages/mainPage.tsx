@@ -8,7 +8,7 @@ const MainPage: React.FC = () => {
   return (
     <div className="relative w-screen h-screen">
       <div
-        className={`absolute inset-0 w-full h-full bg-cover transition-opacity duration-1000 ease-in-out ${
+        className={`absolute inset-0 w-full h-full  bg-center bg-cover transition-opacity duration-1000 ease-in-out ${
           isProcessing ? "opacity-100" : "opacity-0"
         }`}
         style={{ backgroundImage: backgroundImg }}
