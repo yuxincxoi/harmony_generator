@@ -9,13 +9,13 @@ const MainPage: React.FC = () => {
     <div className="relative w-screen h-screen">
       <div
         className={`absolute inset-0 w-full h-full  bg-center bg-cover transition-opacity duration-1000 ease-in-out ${
-          isProcessing ? "opacity-100" : "opacity-0"
+          isProcessing ? "opacity-70" : "opacity-0"
         }`}
         style={{ backgroundImage: backgroundImg }}
       />
       <div
         className={`absolute inset-0 w-full h-full bg-white transition-opacity duration-1000 ease-in-out ${
-          isProcessing ? "opacity-0" : "opacity-100"
+          isProcessing ? "opacity-0" : "opacity-70"
         }`}
       />
       <Processor className="relative" onProcessingChange={setIsProcessing} />
