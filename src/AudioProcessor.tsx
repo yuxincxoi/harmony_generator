@@ -28,6 +28,13 @@ const Processor: React.FC<ProcessorProps> = ({
     }
   }, [isProcessing, onProcessingChange]);
 
+  useEffect(() => {
+    // 녹음이 중지되고 audioURL이 있을 때 모달 열기
+    if (!isProcessing && audioURL) {
+      setIsModalOpen(true);
+    }
+  }, [isProcessing, audioURL]);
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -37,10 +44,8 @@ const Processor: React.FC<ProcessorProps> = ({
       className={`fixed inset-0 flex items-center justify-center h-screen ${className}`}
     >
       <RecordBtn isProcessing={isProcessing} onClick={handleStartStop} />
-      {audioURL && (
-        <div className={`mt-4 ${isProcessing ? "hidden" : ""}`}>
-          <Modal onClose={handleCloseModal} audioURL={audioURL} />
-        </div>
+      {audioURL && !isProcessing && isModalOpen && (
+        <Modal onClose={handleCloseModal} audioURL={audioURL} />
       )}
     </div>
   );
