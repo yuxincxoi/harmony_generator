@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAudioContext } from "./hooks/useAudioContext";
 import { useJungleModule } from "./hooks/useJungleModule";
 import { useAudioProcessor } from "./hooks/useAudioProcessor";
 import RecordBtn from "../src/components/RecordBtn";
-import AudioController from "./components/AudioController";
-import DownloadBtn from "./components/DownloadBtn";
+import { Modal } from "./components/Modal";
 import { ProcessorProps } from "./interfaces/AudioProcessor.interface";
 
 const Processor: React.FC<ProcessorProps> = ({
@@ -15,6 +14,7 @@ const Processor: React.FC<ProcessorProps> = ({
   const JungleModule = useJungleModule();
   const { isProcessing, audioURL, processAudio, handleStartStop, cleanup } =
     useAudioProcessor({ audioContext, JungleModule });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     processAudio();
@@ -28,6 +28,10 @@ const Processor: React.FC<ProcessorProps> = ({
     }
   }, [isProcessing, onProcessingChange]);
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center h-screen ${className}`}
@@ -35,8 +39,7 @@ const Processor: React.FC<ProcessorProps> = ({
       <RecordBtn isProcessing={isProcessing} onClick={handleStartStop} />
       {audioURL && (
         <div className={`mt-4 ${isProcessing ? "hidden" : ""}`}>
-          <AudioController audioURL={audioURL} />
-          <DownloadBtn audioURL={audioURL} />
+          <Modal onClose={handleCloseModal} audioURL={audioURL} />
         </div>
       )}
     </div>
