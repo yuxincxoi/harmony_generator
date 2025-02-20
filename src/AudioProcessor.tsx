@@ -10,7 +10,7 @@ interface ProcessorProps {
   onProcessingChange?: (isProcessing: boolean) => void;
 }
 
-const AudioProcessor: React.FC<ProcessorProps> = ({ onProcessingChange }) => {
+const Processor: React.FC<ProcessorProps> = ({ onProcessingChange }) => {
   const audioContext = useAudioContext();
   const JungleModule = useJungleModule();
   const { isProcessing, audioURL, processAudio, handleStartStop, cleanup } =
@@ -41,4 +41,4 @@ const AudioProcessor: React.FC<ProcessorProps> = ({ onProcessingChange }) => {
   );
 };
 
-export default AudioProcessor;
+export default Processor;
