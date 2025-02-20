@@ -6,7 +6,11 @@ import RecordBtn from "../src/components/RecordBtn";
 import AudioController from "./components/AudioController";
 import DownloadBtn from "./components/DownloadBtn";
 
-const AudioProcessor = () => {
+interface ProcessorProps {
+  onProcessingChange?: (isProcessing: boolean) => void;
+}
+
+const AudioProcessor: React.FC<ProcessorProps> = ({ onProcessingChange }) => {
   const audioContext = useAudioContext();
   const JungleModule = useJungleModule();
   const { isProcessing, audioURL, processAudio, handleStartStop, cleanup } =
@@ -16,6 +20,13 @@ const AudioProcessor = () => {
     processAudio();
     return cleanup;
   }, [audioContext, isProcessing, JungleModule]);
+
+  // isProcessing 값이 변경될 때 MainPage에 전달
+  useEffect(() => {
+    if (onProcessingChange) {
+      onProcessingChange(isProcessing);
+    }
+  }, [isProcessing, onProcessingChange]);
 
   return (
     <div>

@@ -2,6 +2,7 @@ import React from "react";
 import Processor from "../AudioProcessor";
 
 const MainPage: React.FC = () => {
+  const [isProcessing, setIsProcessing] = useState(false);
   const backgroundImg = "url('./img/backgroundImg.jpg')";
 
   return (
@@ -11,7 +12,7 @@ const MainPage: React.FC = () => {
         backgroundImage: backgroundImg,
       }}
     >
-      <Processor />
+      <Processor onProcessingChange={setIsProcessing} />
     </div>
   );
 };
