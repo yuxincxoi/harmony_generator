@@ -13,7 +13,7 @@ const MainPage: React.FC = () => {
         backgroundColor: isProcessing ? "transparent" : "white",
       }}
     >
-      <Processor onProcessingChange={setIsProcessing} />
+      <Processor className="relative" onProcessingChange={setIsProcessing} />
     </div>
   );
 };

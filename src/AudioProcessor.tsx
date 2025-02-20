@@ -8,9 +8,13 @@ import DownloadBtn from "./components/DownloadBtn";
 
 interface ProcessorProps {
   onProcessingChange?: (isProcessing: boolean) => void;
+  className?: string;
 }
 
-const Processor: React.FC<ProcessorProps> = ({ onProcessingChange }) => {
+const Processor: React.FC<ProcessorProps> = ({
+  onProcessingChange,
+  className,
+}) => {
   const audioContext = useAudioContext();
   const JungleModule = useJungleModule();
   const { isProcessing, audioURL, processAudio, handleStartStop, cleanup } =
@@ -29,7 +33,7 @@ const Processor: React.FC<ProcessorProps> = ({ onProcessingChange }) => {
   }, [isProcessing, onProcessingChange]);
 
   return (
-    <div>
+    <div className={className}>
       <RecordBtn isProcessing={isProcessing} onClick={handleStartStop} />
       {audioURL && (
         <div className="mt-4">
