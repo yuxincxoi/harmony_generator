@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Processor from "../AudioProcessor";
 
 const MainPage: React.FC = () => {
@@ -9,7 +9,8 @@ const MainPage: React.FC = () => {
     <div
       className={`w-screen h-screen bg-cover transition-all duration-1000`}
       style={{
-        backgroundImage: backgroundImg,
+        backgroundImage: isProcessing ? backgroundImg : "none",
+        backgroundColor: isProcessing ? "transparent" : "white",
       }}
     >
       <Processor onProcessingChange={setIsProcessing} />
