@@ -36,7 +36,7 @@ const Processor: React.FC<ProcessorProps> = ({
     <div className={className}>
       <RecordBtn isProcessing={isProcessing} onClick={handleStartStop} />
       {audioURL && (
-        <div className="mt-4">
+        <div className={`mt-4 ${isProcessing ? "hidden" : ""}`}>
           <AudioController audioURL={audioURL} />
           <DownloadBtn audioURL={audioURL} />
         </div>
