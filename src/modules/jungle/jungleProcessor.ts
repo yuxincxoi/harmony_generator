@@ -4,7 +4,7 @@ export const initializeJungleProcessor = async (
   jungleRef: React.MutableRefObject<any>,
   pitchOffset: number
 ) => {
-  const { default: Jungle } = await import("../../lib/jungle.mjs");
+  const { default: Jungle } = await import("../../../lib/jungle.mjs");
   jungleRef.current = new Jungle(audioContext);
   jungleRef.current.setPitchOffset(pitchOffset);
 };

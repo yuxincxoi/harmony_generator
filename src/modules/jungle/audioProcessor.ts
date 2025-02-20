@@ -8,7 +8,7 @@ import {
   startMicrophoneProcessing,
   stopMicrophoneProcessing,
 } from "./microphone";
-import { cleanupAudioResources } from "./cleanup";
+import { cleanupAudioResources } from "../../utils/cleanup";
 
 export const handleAudioProcessing = async (
   audioContext: AudioContext | null,
