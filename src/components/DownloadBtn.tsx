@@ -1,8 +1,5 @@
 import React from "react";
-
-interface DownloadBtnProps {
-  audioURL: string;
-}
+import { DownloadBtnProps } from "@/interfaces/components/DownloadBtn.interface";
 
 const DownloadBtn: React.FC<DownloadBtnProps> = ({ audioURL }) => {
   return (

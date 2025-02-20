@@ -1,8 +1,5 @@
 import React from "react";
-
-interface AudioControllerProps {
-  audioURL: string | null;
-}
+import { AudioControllerProps } from "@/interfaces/components/AudioController.interface";
 
 const AudioController: React.FC<AudioControllerProps> = ({ audioURL }) => {
   if (!audioURL) return null;

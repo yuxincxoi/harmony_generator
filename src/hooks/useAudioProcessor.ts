@@ -1,10 +1,6 @@
 import { useRef, useState } from "react";
 import { cleanupAudioResources } from "../utils/cleanup";
-
-interface AudioProcessorHookProps {
-  audioContext: AudioContext | null;
-  JungleModule: any;
-}
+import { AudioProcessorHookProps } from "@/interfaces/hooks/useAudioProcessor.interface";
 
 export const useAudioProcessor = ({
   audioContext,
