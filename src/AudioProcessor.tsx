@@ -5,11 +5,7 @@ import { useAudioProcessor } from "./hooks/useAudioProcessor";
 import RecordBtn from "../src/components/RecordBtn";
 import AudioController from "./components/AudioController";
 import DownloadBtn from "./components/DownloadBtn";
-
-interface ProcessorProps {
-  onProcessingChange?: (isProcessing: boolean) => void;
-  className?: string;
-}
+import { ProcessorProps } from "./interfaces/AudioProcessor.interface";
 
 const Processor: React.FC<ProcessorProps> = ({
   onProcessingChange,
