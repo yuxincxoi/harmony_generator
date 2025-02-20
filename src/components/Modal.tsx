@@ -5,16 +5,18 @@ import DownloadBtn from "./DownloadBtn";
 
 export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
   return (
-    <div className="w-[400px] h-[250px] bg-black rounded-xl">
-      <div
-        className="text-right mr-4 mt-2 font-thin text-lg cursor-pointer"
-        onClick={onClose}
-      >
-        X
-      </div>
-      <div>
-        <AudioController audioURL={audioURL} />
-        <DownloadBtn audioURL={audioURL} />
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="w-[650px] h-[500px] bg-white rounded-xl relative">
+        <button
+          className="absolute right-4 top-2 text-gray-700 font-thin text-lg cursor-pointer hover:text-gray-400 transition-colors"
+          onClick={onClose}
+        >
+          X
+        </button>
+        <div className="pt-8">
+          <AudioController audioURL={audioURL} />
+          <DownloadBtn audioURL={audioURL} />
+        </div>
       </div>
     </div>
   );
