@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { cleanupAudioResources } from "./utils/cleanup";
+import RecordBtn from "../src/components/RecordBtn";
+import AudioController from "./components/AudioController";
+import DownloadBtn from "./components/DownloadBtn";
 
 const AudioProcessor = () => {
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
@@ -110,20 +113,11 @@ const AudioProcessor = () => {
   return (
     <>
       <div>
-        <div
-          className="cursor-pointer mt-16 mx-auto w-60 text-center p-2 bg-gray-200 hover:bg-gray-300 rounded-lg"
-          onClick={handleStartStop}
-        >
-          {isProcessing ? "중단" : "시작"}
-        </div>
+        <RecordBtn isProcessing={isProcessing} onClick={handleStartStop} />
         {audioURL && (
           <div className="mt-4">
-            <audio controls src={audioURL}></audio>
-            <a href={audioURL} download="processed_audio.m4a">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2">
-                다운로드
-              </button>
-            </a>
+            <AudioController audioURL={audioURL} />
+            <DownloadBtn audioURL={audioURL} />
           </div>
         )}
       </div>
