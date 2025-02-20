@@ -33,7 +33,9 @@ const Processor: React.FC<ProcessorProps> = ({
   }, [isProcessing, onProcessingChange]);
 
   return (
-    <div className={className}>
+    <div
+      className={`fixed inset-0 flex items-center justify-center h-screen ${className}`}
+    >
       <RecordBtn isProcessing={isProcessing} onClick={handleStartStop} />
       {audioURL && (
         <div className={`mt-4 ${isProcessing ? "hidden" : ""}`}>
