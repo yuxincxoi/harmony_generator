@@ -4,6 +4,7 @@ import { RecordBtnProps } from "@/interfaces/components/RecordBtn.interface";
 const RecordBtn: React.FC<RecordBtnProps> = ({ isProcessing, onClick }) => {
   const recordImg = "url('./img/recordImg.png')";
   const backgroundImg = "url('./img/backgroundImg.jpg')";
+  const stopImg = "url('./img/rectangle.png')";
 
   return (
     <div
@@ -21,8 +22,10 @@ const RecordBtn: React.FC<RecordBtnProps> = ({ isProcessing, onClick }) => {
       <div className="absolute w-[245px] h-[245px] bg-white rounded-full"></div>
       <div className="absolute bg-white rounded-full">
         <div
-          className="w-[100px] h-[100px] bg-contain"
-          style={{ backgroundImage: isProcessing ? "hi" : recordImg }}
+          className={`bg-contain ${
+            isProcessing ? "w-[50px] h-[50px]" : "w-[100px] h-[100px]"
+          }`}
+          style={{ backgroundImage: isProcessing ? stopImg : recordImg }}
         ></div>
       </div>
     </div>
