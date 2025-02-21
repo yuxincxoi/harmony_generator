@@ -18,7 +18,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
         </button>
         <div className="flex flex-col items-center mt-16">
           <PlayIcon isPlaying={isPlaying} />
-          <div className="pt-8">
+          <div className="pt-8 flex">
             <AudioController
               audioURL={audioURL}
               onPlayingChange={setIsPlaying}

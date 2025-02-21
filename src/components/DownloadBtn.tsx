@@ -2,11 +2,15 @@ import React from "react";
 import { DownloadBtnProps } from "@/interfaces/components/DownloadBtn.interface";
 
 const DownloadBtn: React.FC<DownloadBtnProps> = ({ audioURL }) => {
+  const downloadBtn = "url('./img/downloadBtn.png')";
+
   return (
     <a href={audioURL} download="processed_audio.m4a">
-      <button className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2 w-full">
-        Download
-      </button>
+      <button
+        title="download"
+        className="w-5 h-5 mt-4 ml-5 bg-cover cursor-pointer"
+        style={{ backgroundImage: downloadBtn }}
+      ></button>
     </a>
   );
 };
