@@ -14,10 +14,12 @@ export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
         >
           X
         </button>
-        <PlayIcon />
-        <div className="pt-8">
-          <AudioController audioURL={audioURL} />
-          <DownloadBtn audioURL={audioURL} />
+        <div className="flex flex-col items-center mt-16">
+          <PlayIcon />
+          <div className="pt-8">
+            <AudioController audioURL={audioURL} />
+            <DownloadBtn audioURL={audioURL} />
+          </div>
         </div>
       </div>
     </div>
