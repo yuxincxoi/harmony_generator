@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { AudioControllerProps } from "@/interfaces/components/AudioController.interface";
 
-const AudioController: React.FC<AudioControllerProps> = ({ audioURL }) => {
+const AudioController: React.FC<AudioControllerProps> = ({
+  audioURL,
+  onPlayingChange,
+}) => {
   const playBtn = "url('./img/playBtn.png')";
   const pauseBtn = "url('./img/pauseBtn.png')";
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -44,6 +47,7 @@ const AudioController: React.FC<AudioControllerProps> = ({ audioURL }) => {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
+    onPlayingChange(!isPlaying);
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
