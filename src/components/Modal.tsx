@@ -7,14 +7,14 @@ import { PlayIcon } from "./PlayIcon";
 export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="w-[600px] h-[450px] bg-white rounded-xl relative">
+      <div className="w-[580px] h-[400px] bg-white rounded-xl relative">
         <button
           className="absolute right-4 top-2 text-gray-700 font-thin text-lg cursor-pointer hover:text-gray-400 transition-colors"
           onClick={onClose}
         >
           X
         </button>
-        <div className="flex flex-col items-center mt-20">
+        <div className="flex flex-col items-center mt-16">
           <PlayIcon />
           <div className="pt-8">
             <AudioController audioURL={audioURL} />
