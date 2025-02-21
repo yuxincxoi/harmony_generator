@@ -13,11 +13,10 @@ const RecordBtn: React.FC<RecordBtnProps> = ({ isProcessing, onClick }) => {
     >
       <div className="absolute bg-white w-[270px] h-[270px] rounded-full"></div>
       <div
-        className="absolute w-[260px] h-[260px] rounded-full bg-cover"
-        style={{
-          backgroundImage: backgroundImg,
-          animation: isProcessing ? "spin 5s linear infinite" : "",
-        }}
+        className={`absolute w-[260px] h-[260px] rounded-full bg-cover ${
+          isProcessing ? "animate-spin-slow" : ""
+        }`}
+        style={{ backgroundImage: backgroundImg }}
       ></div>
       <div className="absolute w-[245px] h-[245px] bg-white rounded-full"></div>
       <div className="absolute bg-white rounded-full">
