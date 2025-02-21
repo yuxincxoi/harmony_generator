@@ -23,6 +23,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
               audioURL={audioURL}
               onPlayingChange={setIsPlaying}
             />
+            <DownloadBtn audioURL={audioURL} />
           </div>
         </div>
       </div>
