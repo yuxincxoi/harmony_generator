@@ -64,7 +64,7 @@ const AudioController: React.FC<AudioControllerProps> = ({ audioURL }) => {
         aria-label={isPlaying ? "일시정지" : "재생"}
       ></button>
       <input
-        aria-label="hi"
+        aria-label="progress"
         type="range"
         value={progress}
         onChange={handleSeek}
