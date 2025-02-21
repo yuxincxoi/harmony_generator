@@ -2,6 +2,7 @@ import React from "react";
 import ModalProps from "@/interfaces/components/Modal.interface";
 import AudioController from "./AudioController";
 import DownloadBtn from "./DownloadBtn";
+import { PlayIcon } from "./PlayIcon";
 
 export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
   return (
@@ -13,6 +14,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
         >
           X
         </button>
+        <PlayIcon />
         <div className="pt-8">
           <AudioController audioURL={audioURL} />
           <DownloadBtn audioURL={audioURL} />
