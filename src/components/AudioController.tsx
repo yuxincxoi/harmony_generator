@@ -19,13 +19,20 @@ const AudioController: React.FC<AudioControllerProps> = ({ audioURL }) => {
       setProgress((audio.currentTime / audio.duration) * 100);
     };
 
+    // 오디오가 끝났을 때 isPlaying을 false로 설정
+    const handleEnd = () => {
+      setIsPlaying(false);
+    };
+
     audio.addEventListener("timeupdate", updateTime);
+    audio.addEventListener("ended", handleEnd);
     audio.addEventListener("loadedmetadata", () => {
       setDuration(audio.duration);
     });
 
     return () => {
       audio.removeEventListener("timeupdate", updateTime);
+      audio.removeEventListener("ended", handleEnd);
     };
   }, []);
 
