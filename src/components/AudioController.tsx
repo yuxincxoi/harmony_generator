@@ -58,10 +58,10 @@ const AudioController: React.FC<AudioControllerProps> = ({ audioURL }) => {
   return (
     <div className="flex flex-row items-center hover:text-gray-500 transition w-[300px] mt-4">
       <button
-        title="play"
         onClick={togglePlay}
         className="w-5 h-5 bg-cover"
-        style={{ backgroundImage: isPlaying ? playBtn : pauseBtn }}
+        style={{ backgroundImage: isPlaying ? pauseBtn : playBtn }}
+        aria-label={isPlaying ? "일시정지" : "재생"}
       ></button>
       <input
         aria-label="hi"
