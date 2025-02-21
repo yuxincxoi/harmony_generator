@@ -33,7 +33,7 @@ const Processor: React.FC<ProcessorProps> = ({
     if (!isProcessing && audioURL) {
       setTimeout(() => {
         setIsModalOpen(true);
-      }, 800);
+      }, 500);
     }
   }, [isProcessing, audioURL]);
 
