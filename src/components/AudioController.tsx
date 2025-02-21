@@ -25,6 +25,7 @@ const AudioController: React.FC<AudioControllerProps> = ({
     // 오디오가 끝났을 때 isPlaying을 false로 설정
     const handleEnd = () => {
       setIsPlaying(false);
+      onPlayingChange(false);
     };
 
     audio.addEventListener("timeupdate", updateTime);
