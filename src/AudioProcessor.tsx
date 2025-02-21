@@ -31,7 +31,9 @@ const Processor: React.FC<ProcessorProps> = ({
   useEffect(() => {
     // 녹음이 중지되고 audioURL이 있을 때 모달 열기
     if (!isProcessing && audioURL) {
-      setIsModalOpen(true);
+      setTimeout(() => {
+        setIsModalOpen(true);
+      }, 800);
     }
   }, [isProcessing, audioURL]);
 
