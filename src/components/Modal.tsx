@@ -14,7 +14,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose, audioURL }) => {
         >
           X
         </button>
-        <div className="flex flex-col items-center mt-16">
+        <div className="flex flex-col items-center mt-20">
           <PlayIcon />
           <div className="pt-8">
             <AudioController audioURL={audioURL} />
