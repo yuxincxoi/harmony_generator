@@ -33,7 +33,7 @@ export const useAudioProcessor = ({
 
         microphoneRef.current.connect(jungleRef.current.input);
         jungleRef.current.output.connect(processorDestinationRef.current);
-        jungleRef.current.output.connect(audioContext.destination);
+        // jungleRef.current.output.connect(audioContext.destination);
 
         mediaRecorderRef.current = new MediaRecorder(
           processorDestinationRef.current.stream
