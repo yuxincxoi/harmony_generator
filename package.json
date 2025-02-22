@@ -8,7 +8,7 @@
     "dev": "webpack serve --mode development --open",
     "client": "webpack serve --mode development --open --port 3000",
     "server": "ts-node server/server.ts",
-    "start": "npm run build && npm run server"
+    "start": "webpack serve --mode production --open"
   },
   "author": "",
   "license": "ISC",

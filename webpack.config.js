@@ -6,11 +6,14 @@ module.exports = {
   output: {
     filename: "index.bundle.js",
     path: path.resolve(__dirname, "dist"),
+    publicPath: "/",
   },
   devServer: {
-    static: "./dist",
+    static: path.resolve(__dirname, "dist"),
     port: 3000,
     open: true,
+    hot: true,
+    historyApiFallback: true,
   },
   module: {
     rules: [
