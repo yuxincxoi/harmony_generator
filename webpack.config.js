@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: "index.bundle.js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    publicPath: "./",
   },
   devServer: {
     static: path.resolve(__dirname, "dist"),
