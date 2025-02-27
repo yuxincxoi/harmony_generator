@@ -13,7 +13,15 @@ const App: React.FC = () => {
     }
   }, [isIndexPage]);
 
-  return isIndexPage ? <IndexPage /> : <MainPage />;
+  return isIndexPage ? (
+    <div>
+      <IndexPage />
+    </div>
+  ) : (
+    <div>
+      <MainPage />
+    </div>
+  );
 };
 
 export default App;
